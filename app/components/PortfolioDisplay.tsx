@@ -42,12 +42,17 @@ type PortfolioProps = {
 const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
    const [openSlide, setOpenSlide]: [OpenSlide, SetOpenSlide] = useState(false);
    const [selectedImage, setSelectedImage] = useState<number | null>(null);
+   const [activeTab, setActiveTab] = useState<number>(0);
 
    const handleImageClick = (index: number) => {
       setSelectedImage(index);
 
       setOpenSlide(true);
       document.body.style.overflow = 'hidden';
+   };
+
+   const handleTabClick = (index: number) => {
+      setActiveTab(index);
    };
 
    return (
@@ -59,51 +64,39 @@ const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
                }}
             >
                <Tab.List className='flex items-center w-full justify-center mb-24'>
-                  {tabs.map((tab) => (
+                  {tabs.map((tab, index) => (
                      <Tab key={tab.key} className='sm:px-8 px-5 outline-none'>
-                        {({ selected }) => (
-                           <span
-                              className={classNames(
-                                 'lg:text-xl uppercase cursor-pointer',
-                                 selected ? 'text-white' : 'text-stone-400'
-                              )}
-                           >
-                              {tab.display}
-                           </span>
-                        )}
+                        <div
+                           className={classNames(
+                              'lg:text-xl uppercase cursor-pointer',
+                              activeTab === index
+                                 ? 'text-white'
+                                 : 'text-stone-400'
+                           )}
+                           onClick={() => handleTabClick(index)}
+                        >
+                           {tab.display}
+                        </div>
                      </Tab>
                   ))}
                </Tab.List>
-               <Tab.Panels>
-                  <Tab.Panel>
+               {tabs.map((tab, index) => (
+                  <Tab.Panel key={tab.key}>
                      <Gallery
-                        photos={allRandom}
+                        photos={
+                           index === 0
+                              ? allRandom
+                              : index === 1
+                              ? oceans
+                              : forests
+                        }
                         handleImageClick={handleImageClick}
                         openSlide={openSlide}
                         setOpenSlide={setOpenSlide}
                         selectedImage={selectedImage}
                      />
                   </Tab.Panel>
-
-                  <Tab.Panel>
-                     <Gallery
-                        photos={oceans}
-                        handleImageClick={handleImageClick}
-                        openSlide={openSlide}
-                        setOpenSlide={setOpenSlide}
-                        selectedImage={selectedImage}
-                     />
-                  </Tab.Panel>
-                  <Tab.Panel>
-                     <Gallery
-                        photos={forests}
-                        handleImageClick={handleImageClick}
-                        openSlide={openSlide}
-                        setOpenSlide={setOpenSlide}
-                        selectedImage={selectedImage}
-                     />
-                  </Tab.Panel>
-               </Tab.Panels>
+               ))}
             </Tab.Group>
          </div>
       </>
