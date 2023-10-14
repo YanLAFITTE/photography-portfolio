@@ -3,7 +3,7 @@
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import Gallery from './Gallery';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const tabs = [
    {
@@ -31,15 +31,15 @@ type Photo = {
    height: number;
    alt: string;
    blurData: string;
+   likes: number;
 };
 
 type PortfolioProps = {
    oceans: Photo[];
    forests: Photo[];
-   allRandom: Photo[];
 };
 
-const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
+const PortfolioDisplay = ({ oceans, forests }: PortfolioProps) => {
    const [openSlide, setOpenSlide]: [OpenSlide, SetOpenSlide] = useState(false);
    const [selectedImage, setSelectedImage] = useState<number | null>(null);
    const [activeTab, setActiveTab] = useState<number>(0);
@@ -55,16 +55,17 @@ const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
       setActiveTab(index);
    };
 
-   const photoSets = [allRandom, oceans, forests];
+   const allPhotos = useMemo(() => {
+      const all = [...oceans, ...forests];
+      return all.sort((a, b) => a.likes - b.likes);
+   }, [oceans, forests]);
+
+   const photoSets = [allPhotos, oceans, forests];
 
    return (
       <>
          <div className='flex flex-col items-center '>
-            <Tab.Group
-               onChange={(index) => {
-                  console.log('Changed selected tab to:', index);
-               }}
-            >
+            <Tab.Group>
                <Tab.List className='flex items-center w-full justify-center mb-24'>
                   {tabs.map((tab, index) => (
                      <Tab key={tab.key} className='sm:px-8 px-5 outline-none'>

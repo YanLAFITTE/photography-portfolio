@@ -12,12 +12,13 @@ type Photo = {
    height: number;
    alt: string;
    blurData: string;
+   likes: number;
 };
 
 type PortfolioProps = {
    oceans: Photo[];
    forests: Photo[];
-   allRandom: Photo[];
+ 
 };
 
 const getData = async (): Promise<PortfolioProps> => {
@@ -28,38 +29,27 @@ const getData = async (): Promise<PortfolioProps> => {
 
    const oceans = await getImages(unsplash, 'oceans');
    const forests = await getImages(unsplash, 'forests');
-   function randomFill(oceans: Photo[], forests: Photo[]): Photo[] {
-      const all = [...oceans, ...forests];
-      const shuffled = [...all];
+ 
 
-      // Fisher-Yates Shuffle Algorithm
-      for (let i = shuffled.length - 1; i > 0; i--) {
-         const j = Math.floor(Math.random() * (i + 1));
-         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-
-      return shuffled;
-   }
-
-   const allRandom = randomFill(oceans, forests);
-
-   return { oceans, forests, allRandom };
+   return { oceans, forests };
 };
 
 async function getImages(
    cli: ReturnType<typeof createApi>,
    query: string
 ): Promise<Photo[]> {
-   const images = await cli.search.getPhotos({
+   const images = await cli.photos.getRandom({
       query,
-      perPage: 10,
-  
+      count: 10,
    });
 
    const mappedImages: Photo[] = [];
    if (images.type === 'success') {
+      const responseArr = Array.isArray(images.response)
+         ? images.response
+         : [images.response];
       await Promise.all(
-         images.response.results.map(async (image, idx) => {
+         responseArr.map(async (image, idx) => {
             const src = image.urls.full;
             const buffer = await fetch(src).then(async (res) =>
                Buffer.from(await res.arrayBuffer())
@@ -75,6 +65,7 @@ async function getImages(
                height: image.height,
                alt: image.alt_description ?? `image-${idx}`,
                blurData: base64, // Add blurData URL
+               likes: image.likes
             };
 
             mappedImages.push(photo);
@@ -88,13 +79,12 @@ async function getImages(
 }
 
 const portfolio = async () => {
-   const { oceans, forests, allRandom } = await getData();
+   const { oceans, forests } = await getData();
 
    return (
       <PortfolioDisplay
          oceans={oceans}
          forests={forests}
-         allRandom={allRandom}
       />
    );
 };
