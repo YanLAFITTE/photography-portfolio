@@ -56,11 +56,7 @@ const Gallery = ({
                   className='mb-3 sm:mb-5   relative group'
                   key={i}
                   ref={ref}
-                  style={{
-                     opacity: inView ? 1 : 0,
-                     scale: inView ? 1 : 0,
-                     transition: 'opacity 500ms ease-in-out',
-                  }}
+               
                >
                   <Image
                      id={`image-${i}`}
@@ -72,6 +68,11 @@ const Gallery = ({
                      blurDataURL={image.blurData}
                      className=' w-full object-cover hover:cursor-pointer  sm:hover:opacity-80'
                      onClick={() => handleImageClick(i)}
+                     style={{
+                        opacity: inView ? 1 : 0,
+                        scale: inView ? 1 : 0,
+                        transition: 'opacity 500ms ease-in-out',
+                     }}
                   />
                   <p className='absolute top-2 left-2 opacity-0 group-hover:opacity-100'>
                      {image.user}
