@@ -39,7 +39,7 @@ async function getImages(
 ): Promise<Photo[]> {
    const images = await cli.photos.getRandom({
       query,
-      count: 10,
+      count: 6,
    });
 
    const mappedImages: Photo[] = [];
