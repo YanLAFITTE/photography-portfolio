@@ -3,7 +3,6 @@ import Slider from './Slider';
 
 import Masonry from 'react-masonry-css';
 import Image from 'next/image';
-import { useInView } from 'react-intersection-observer';
 
 type OpenSlide = boolean;
 type SetOpenSlide = React.Dispatch<React.SetStateAction<OpenSlide>>;
@@ -39,11 +38,6 @@ const Gallery = ({
    setOpenSlide,
    selectedImage,
 }: GalleryProps) => {
-   const { ref, inView } = useInView({
-      triggerOnce: true,
-      threshold: 1,
-   });
-
    return (
       <>
          <Masonry
@@ -52,12 +46,7 @@ const Gallery = ({
             columnClassName='my-masonry-grid_column'
          >
             {photos.map((image, i) => (
-               <div
-                  className='mb-3 sm:mb-5   relative group'
-                  key={i}
-                  ref={ref}
-               
-               >
+               <div className='mb-3 sm:mb-5   relative group' key={i}>
                   <Image
                      id={`image-${i}`}
                      src={image.src}
@@ -68,11 +57,6 @@ const Gallery = ({
                      blurDataURL={image.blurData}
                      className=' w-full object-cover hover:cursor-pointer  sm:hover:opacity-80'
                      onClick={() => handleImageClick(i)}
-                     style={{
-                        opacity: inView ? 1 : 0,
-                        scale: inView ? 1 : 0,
-                        transition: 'opacity 500ms ease-in-out',
-                     }}
                   />
                   <p className='absolute top-2 left-2 opacity-0 group-hover:opacity-100'>
                      {image.user}
