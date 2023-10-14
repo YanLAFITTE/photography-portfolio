@@ -25,10 +25,10 @@ type GalleryProps = {
 };
 
 const breakpointColumnsObj = {
-   default: 4,
-   1100: 3,
+   default: 2,
+   1100: 2,
    700: 2,
-   500: 2,
+   500: 1,
 };
 
 const Gallery = ({
@@ -42,11 +42,11 @@ const Gallery = ({
       <>
          <Masonry
             breakpointCols={breakpointColumnsObj}
-            className=' flex gap-3 sm:gap-5  max-w-[1200px] mx-auto fade-in'
+            className=' flex gap-5 sm:gap-8  max-w-[1200px] mx-auto fade-in'
             columnClassName='my-masonry-grid_column'
          >
             {photos.map((image, i) => (
-               <div className='mb-3 sm:mb-5 bg-stone-900   relative group' key={i}>
+               <div className='mb-5 sm:mb-8 bg-stone-900   relative group' key={i}>
                   <Image
                      id={`image-${i}`}
                      src={image.src}
