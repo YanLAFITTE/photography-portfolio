@@ -73,7 +73,7 @@ const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
                               'lg:text-xl uppercase cursor-pointer',
                               activeTab === index
                                  ? 'text-white'
-                                 : 'text-stone-400'
+                                 : 'text-stone-400 hover:text-white'
                            )}
                            onClick={() => handleTabClick(index)}
                         >
