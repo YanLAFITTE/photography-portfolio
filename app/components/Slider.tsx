@@ -22,7 +22,6 @@ type Photo = {
    alt: string;
    user: string;
    link: string;
-
 };
 
 type SliderProps = {
@@ -76,8 +75,8 @@ const Slider: FC<SliderProps> = ({
       <div
          className={classNames(
             openSlide
-               ? 'fixed z-20 top-0 left-0 h-screen w-full bg-black '
-               : 'hidden'
+               ? 'fixed z-20 top-0 left-0 h-screen w-full  bg-black  '
+               : 'hidden '
          )}
       >
          <div className='swiper-container'>
@@ -90,7 +89,7 @@ const Slider: FC<SliderProps> = ({
                            alt={image.alt}
                            width={image.width}
                            height={image.height}
-                           className='w-full object-contain h-screen bg-black  py-10 px-5 sm:py-10 sm:px-20 '
+                           className='w-full object-contain h-screen   py-10 px-5 sm:py-10 sm:px-20 '
                         />
                         <div className='absolute bottom-0 left-0 text-center pb-2 w-full'>
                            Photo by{' '}
