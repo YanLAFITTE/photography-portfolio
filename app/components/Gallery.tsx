@@ -53,8 +53,8 @@ const Gallery = ({
                      alt={image.alt}
                      width={image.width}
                      height={image.height}
-                     placeholder='blur'
-                     blurDataURL={image.blurData}
+                     // placeholder='blur'
+                     // blurDataURL={image.blurData}
                      className=' w-full object-cover hover:cursor-pointer  sm:hover:opacity-80'
                      onClick={() => handleImageClick(i)}
                   />
