@@ -58,7 +58,7 @@ const Gallery = ({
                      className=' w-full object-cover hover:cursor-pointer  sm:hover:opacity-80'
                      onClick={() => handleImageClick(i)}
                   />
-                  <p className='absolute top-2 left-2 opacity-0 group-hover:opacity-100'>
+                  <p className='absolute md:text-xl top-2 left-2 opacity-0 group-hover:opacity-100'>
                      {image.user}
                   </p>
                </div>

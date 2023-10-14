@@ -91,7 +91,7 @@ const Slider: FC<SliderProps> = ({
                            height={image.height}
                            className='w-full object-contain h-screen   py-10 px-5 sm:py-10 sm:px-20 '
                         />
-                        <div className='absolute bottom-0 left-0 text-center pb-2 w-full'>
+                        <div className='absolute bottom-0 left-0 md:text-xl text-center pb-2 w-full'>
                            Photo by{' '}
                            <Link
                               href={image.link}
