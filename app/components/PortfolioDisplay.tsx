@@ -36,12 +36,13 @@ type Photo = {
 type PortfolioProps = {
    oceans: Photo[];
    forests: Photo[];
+   allRandom: Photo[];
 };
 
-const PortfolioDisplay = ({ oceans, forests }: PortfolioProps) => {
+const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
    const [openSlide, setOpenSlide]: [OpenSlide, SetOpenSlide] = useState(false);
    const [selectedImage, setSelectedImage] = useState<number | null>(null);
-   // const [all, setAll] = useState<Photo[]>([]);
+  
 
    const handleImageClick = (index: number) => {
       setSelectedImage(index);
@@ -50,23 +51,7 @@ const PortfolioDisplay = ({ oceans, forests }: PortfolioProps) => {
       document.body.style.overflow = 'hidden';
    };
 
-   // useEffect(() => {
-   //    function randomFill(oceans: Photo[], forests: Photo[]): Photo[] {
-   //       const all = [...oceans, ...forests];
-   //       const shuffled = [...all];
 
-   //       // Fisher-Yates Shuffle Algorithm
-   //       for (let i = shuffled.length - 1; i > 0; i--) {
-   //          const j = Math.floor(Math.random() * (i + 1));
-   //          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-   //       }
-
-   //       return shuffled;
-   //    }
-
-   //    const all = randomFill(oceans, forests);
-   //    setAll(all);
-   // }, [forests, oceans]);
 
    return (
       <>
@@ -91,7 +76,7 @@ const PortfolioDisplay = ({ oceans, forests }: PortfolioProps) => {
                <Tab.Panels>
                   <Tab.Panel>
                      <Gallery
-                        photos={[...oceans, ...forests]}
+                        photos={allRandom}
                         handleImageClick={handleImageClick}
                         openSlide={openSlide}
                         setOpenSlide={setOpenSlide}
