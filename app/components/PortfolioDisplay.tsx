@@ -55,6 +55,8 @@ const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
       setActiveTab(index);
    };
 
+   const photoSets = [allRandom, oceans, forests];
+
    return (
       <>
          <div className='flex flex-col items-center '>
@@ -81,15 +83,9 @@ const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
                   ))}
                </Tab.List>
                {tabs.map((tab, index) => (
-                  <Tab.Panel key={tab.key} >
+                  <Tab.Panel key={tab.key}>
                      <Gallery
-                        photos={
-                           index === 0
-                              ? allRandom
-                              : index === 1
-                              ? oceans
-                              : forests
-                        }
+                        photos={photoSets[activeTab]}
                         handleImageClick={handleImageClick}
                         openSlide={openSlide}
                         setOpenSlide={setOpenSlide}

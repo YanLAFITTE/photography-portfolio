@@ -60,7 +60,7 @@ async function getImages(
    if (images.type === 'success') {
       await Promise.all(
          images.response.results.map(async (image, idx) => {
-            const src = `${image.urls.full}&w=1200&h=1000`;
+            const src = image.urls.full;
             const buffer = await fetch(src).then(async (res) =>
                Buffer.from(await res.arrayBuffer())
             );
