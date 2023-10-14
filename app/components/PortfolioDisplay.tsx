@@ -57,7 +57,7 @@ const PortfolioDisplay = ({ oceans, forests }: PortfolioProps) => {
 
    const allPhotos = useMemo(() => {
       const all = [...oceans, ...forests];
-      return all.sort((a, b) => a.likes - b.likes);
+      return all.sort((a, b) => b.likes - a.likes);
    }, [oceans, forests]);
 
    const photoSets = [allPhotos, oceans, forests];

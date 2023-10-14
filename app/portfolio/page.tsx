@@ -18,7 +18,6 @@ type Photo = {
 type PortfolioProps = {
    oceans: Photo[];
    forests: Photo[];
- 
 };
 
 const getData = async (): Promise<PortfolioProps> => {
@@ -29,9 +28,9 @@ const getData = async (): Promise<PortfolioProps> => {
 
    const oceans = await getImages(unsplash, 'oceans');
    const forests = await getImages(unsplash, 'forests');
- 
 
    return { oceans, forests };
+   
 };
 
 async function getImages(
@@ -65,7 +64,7 @@ async function getImages(
                height: image.height,
                alt: image.alt_description ?? `image-${idx}`,
                blurData: base64, // Add blurData URL
-               likes: image.likes
+               likes: image.likes,
             };
 
             mappedImages.push(photo);
@@ -76,17 +75,13 @@ async function getImages(
    }
 
    return mappedImages;
+   
 }
 
 const portfolio = async () => {
    const { oceans, forests } = await getData();
 
-   return (
-      <PortfolioDisplay
-         oceans={oceans}
-         forests={forests}
-      />
-   );
+   return <PortfolioDisplay oceans={oceans} forests={forests} />;
 };
 
 export default portfolio;
