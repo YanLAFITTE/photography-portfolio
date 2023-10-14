@@ -42,7 +42,6 @@ type PortfolioProps = {
 const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
    const [openSlide, setOpenSlide]: [OpenSlide, SetOpenSlide] = useState(false);
    const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  
 
    const handleImageClick = (index: number) => {
       setSelectedImage(index);
@@ -51,12 +50,14 @@ const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
       document.body.style.overflow = 'hidden';
    };
 
-
-
    return (
       <>
          <div className='flex flex-col items-center '>
-            <Tab.Group>
+            <Tab.Group
+               onChange={(index) => {
+                  console.log('Changed selected tab to:', index);
+               }}
+            >
                <Tab.List className='flex items-center w-full justify-center mb-24'>
                   {tabs.map((tab) => (
                      <Tab key={tab.key} className='sm:px-8 px-5 outline-none'>

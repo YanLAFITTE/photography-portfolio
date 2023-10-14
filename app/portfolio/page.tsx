@@ -28,21 +28,20 @@ const getData = async (): Promise<PortfolioProps> => {
 
    const oceans = await getImages(unsplash, 'oceans');
    const forests = await getImages(unsplash, 'forests');
-   // function randomFill(oceans: Photo[], forests: Photo[]): Photo[] {
-   //    const all = [...oceans, ...forests];
-   //    const shuffled = [...all];
+   function randomFill(oceans: Photo[], forests: Photo[]): Photo[] {
+      const all = [...oceans, ...forests];
+      const shuffled = [...all];
 
-   //    // Fisher-Yates Shuffle Algorithm
-   //    for (let i = shuffled.length - 1; i > 0; i--) {
-   //       const j = Math.floor(Math.random() * (i + 1));
-   //       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-   //    }
+      // Fisher-Yates Shuffle Algorithm
+      for (let i = shuffled.length - 1; i > 0; i--) {
+         const j = Math.floor(Math.random() * (i + 1));
+         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
 
-   //    return shuffled;
-   // }
+      return shuffled;
+   }
 
-   // const allRandom = randomFill(oceans, forests);
-   const allRandom = [...oceans, ...forests];
+   const allRandom = randomFill(oceans, forests);
 
    return { oceans, forests, allRandom };
 };

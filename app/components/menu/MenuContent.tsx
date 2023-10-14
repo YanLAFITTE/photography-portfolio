@@ -17,7 +17,6 @@ const MenuContent = () => {
       return null;
    }
    const { open, setOpen } = menuContext;
-   console.log(open, setOpen);
 
    const internalLinks = [
       {

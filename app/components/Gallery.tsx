@@ -46,7 +46,7 @@ const Gallery = ({
             columnClassName='my-masonry-grid_column'
          >
             {photos.map((image, i) => (
-               <div className='mb-3 sm:mb-5   relative group' key={i}>
+               <div className='mb-3 sm:mb-5 bg-stone-900   relative group' key={i}>
                   <Image
                      id={`image-${i}`}
                      src={image.src}
