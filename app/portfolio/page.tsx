@@ -11,7 +11,7 @@ type Photo = {
    width: number;
    height: number;
    alt: string;
-   blurData: string; 
+   blurData: string;
 };
 
 type PortfolioProps = {
@@ -28,20 +28,21 @@ const getData = async (): Promise<PortfolioProps> => {
 
    const oceans = await getImages(unsplash, 'oceans');
    const forests = await getImages(unsplash, 'forests');
-   function randomFill(oceans: Photo[], forests: Photo[]): Photo[] {
-      const all = [...oceans, ...forests];
-      const shuffled = [...all];
+   // function randomFill(oceans: Photo[], forests: Photo[]): Photo[] {
+   //    const all = [...oceans, ...forests];
+   //    const shuffled = [...all];
 
-      // Fisher-Yates Shuffle Algorithm
-      for (let i = shuffled.length - 1; i > 0; i--) {
-         const j = Math.floor(Math.random() * (i + 1));
-         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
+   //    // Fisher-Yates Shuffle Algorithm
+   //    for (let i = shuffled.length - 1; i > 0; i--) {
+   //       const j = Math.floor(Math.random() * (i + 1));
+   //       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+   //    }
 
-      return shuffled;
-   }
+   //    return shuffled;
+   // }
 
-   const allRandom = randomFill(oceans, forests);
+   // const allRandom = randomFill(oceans, forests);
+   const allRandom = [...oceans, ...forests];
 
    return { oceans, forests, allRandom };
 };
@@ -89,9 +90,13 @@ async function getImages(
 const portfolio = async () => {
    const { oceans, forests, allRandom } = await getData();
 
-
-
-   return <PortfolioDisplay oceans={oceans} forests={forests} allRandom={allRandom}/>;
+   return (
+      <PortfolioDisplay
+         oceans={oceans}
+         forests={forests}
+         allRandom={allRandom}
+      />
+   );
 };
 
 export default portfolio;
