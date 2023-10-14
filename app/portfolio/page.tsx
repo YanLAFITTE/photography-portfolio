@@ -1,82 +1,81 @@
-'use client';
-import { Tab } from '@headlessui/react';
-import classNames from 'classnames';
-import { useEffect, useState } from 'react';
-import Gallery from '../components/Gallery';
+import { createApi } from 'unsplash-js';
+import * as nodeFetch from 'node-fetch';
 
-const tabs = [
-   {
-      key: 'all',
-      display: 'All',
-   },
-   {
-      key: 'oceans',
-      display: 'Oceans',
-   },
-   {
-      key: 'forests',
-      display: 'Forests',
-   },
-];
+import PortfolioDisplay from '../components/PortfolioDisplay';
+import { getPlaiceholder } from 'plaiceholder';
 
-const portfolio = () => {
-   return (
-      <>
-         <div className='flex flex-col items-center '>
-            <Tab.Group>
-               <Tab.List className='flex items-center w-full justify-center mb-24'>
-                  {tabs.map((tab) => (
-                     <Tab key={tab.key} className='sm:px-8 px-5 outline-none'>
-                        {({ selected }) => (
-                           <span
-                              className={classNames(
-                                 'lg:text-xl uppercase cursor-pointer',
-                                 selected ? 'text-white' : 'text-stone-400'
-                              )}
-                           >
-                              {tab.display}
-                           </span>
-                        )}
-                     </Tab>
-                  ))}
-               </Tab.List>
-               <Tab.Panels>
-                  <Tab.Panel>
-                     <Gallery
-                     // photos={all}
-                     // handleImageClick={handleImageClick}
-                     // openSlide={openSlide}
-                     // setOpenSlide={setOpenSlide}
-                     // selectedImage={selectedImage}
-                     />
-                     <div>ALL</div>
-                  </Tab.Panel>
+type Photo = {
+   src: string;
+   user: string;
+   link: string;
+   width: number;
+   height: number;
+   alt: string;
+   blurData: string; 
+};
 
-                  <Tab.Panel>
-                     <Gallery
-                     // photos={oceans}
-                     // handleImageClick={handleImageClick}
-                     // openSlide={openSlide}
-                     // setOpenSlide={setOpenSlide}
-                     // selectedImage={selectedImage}
-                     />
-                     <div>OCEANS</div>
-                  </Tab.Panel>
-                  <Tab.Panel>
-                     <Gallery
-                     // photos={forests}
-                     // handleImageClick={handleImageClick}
-                     // openSlide={openSlide}
-                     // setOpenSlide={setOpenSlide}
-                     // selectedImage={selectedImage}
-                     />
-                     <div>FORESTS</div>
-                  </Tab.Panel>
-               </Tab.Panels>
-            </Tab.Group>
-         </div>
-      </>
-   );
+type PortfolioProps = {
+   oceans: Photo[];
+   forests: Photo[];
+};
+
+const getData = async (): Promise<PortfolioProps> => {
+   const unsplash = createApi({
+      accessKey: process.env.UNSPLASH_ACCESS_KEY!,
+      fetch: nodeFetch.default as unknown as typeof fetch,
+   });
+
+   const oceans = await getImages(unsplash, 'oceans');
+   const forests = await getImages(unsplash, 'forests');
+
+   return { oceans, forests };
+};
+
+async function getImages(
+   cli: ReturnType<typeof createApi>,
+   query: string
+): Promise<Photo[]> {
+   const images = await cli.search.getPhotos({
+      query,
+      perPage: 10,
+   });
+
+   const mappedImages: Photo[] = [];
+   if (images.type === 'success') {
+      await Promise.all(
+         images.response.results.map(async (image, idx) => {
+            const src = image.urls.full;
+            const buffer = await fetch(src).then(async (res) =>
+               Buffer.from(await res.arrayBuffer())
+            );
+
+            const { base64 } = await getPlaiceholder(buffer);
+
+            const photo: Photo = {
+               src: src,
+               user: image.user.name,
+               link: image.user.links.html,
+               width: image.width,
+               height: image.height,
+               alt: image.alt_description ?? `image-${idx}`,
+               blurData: base64, // Add blurData URL
+            };
+
+            mappedImages.push(photo);
+         })
+      );
+   } else {
+      console.error('Could not get photos');
+   }
+
+   return mappedImages;
+}
+
+const portfolio = async () => {
+   const { oceans, forests } = await getData();
+   console.log(oceans, forests);
+
+   return <PortfolioDisplay oceans={oceans} forests={forests} />;
 };
 
 export default portfolio;

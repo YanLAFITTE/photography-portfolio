@@ -10,14 +10,24 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@plaiceholder/next": "^3.0.0",
+    "blurhash": "^2.0.5",
     "classnames": "^2.3.2",
     "next": "13.5.4",
+    "node-fetch": "^2.6.2",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "react-intersection-observer": "^9.5.2",
+    "react-masonry-css": "^1.0.16",
+    "sharp": "^0.32.6",
+    "swiper": "^10.3.1",
+    "unsplash-js": "^7.0.18"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/node-fetch": "^2.6.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
