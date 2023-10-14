@@ -81,7 +81,7 @@ const PortfolioDisplay = ({ oceans, forests, allRandom }: PortfolioProps) => {
                   ))}
                </Tab.List>
                {tabs.map((tab, index) => (
-                  <Tab.Panel key={tab.key}>
+                  <Tab.Panel key={tab.key} >
                      <Gallery
                         photos={
                            index === 0

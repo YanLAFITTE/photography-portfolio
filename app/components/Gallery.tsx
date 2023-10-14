@@ -42,7 +42,7 @@ const Gallery = ({
       <>
          <Masonry
             breakpointCols={breakpointColumnsObj}
-            className=' flex gap-3 sm:gap-5 fade-in max-w-[1200px] mx-auto'
+            className=' flex gap-3 sm:gap-5  max-w-[1200px] mx-auto'
             columnClassName='my-masonry-grid_column'
          >
             {photos.map((image, i) => (
